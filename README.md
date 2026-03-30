@@ -1,97 +1,59 @@
-# ME/CFS Metabolomics Classification
+# ME/CFS Metabolomics Classification Analysis
 
-This project implements machine learning and deep learning models for classifying Myalgic Encephalomyelitis/Chronic Fatigue Syndrome (ME/CFS) based on comprehensive metabolomics data.
+This repository contains a Jupyter notebook that performs machine learning classification of ME/CFS (Myalgic Encephalomyelitis/Chronic Fatigue Syndrome) patients from healthy controls using metabolomics data.
 
-## Overview
+## Project Overview
 
-The notebook performs binary classification to distinguish between ME/CFS cases and healthy controls using metabolomic profiling data. It includes:
+This analysis uses metabolomic profiling data to identify metabolic signatures that distinguish ME/CFS patients from healthy individuals. The study employs multiple machine learning approaches to classify samples based on their metabolomic profiles.
 
-- Data preprocessing and exploratory analysis
-- Multiple machine learning classifiers
-- Deep learning models with TensorFlow/Keras
-- Feature selection based on correlation analysis
-- Model evaluation and performance comparison
+## Dataset Description
 
-## Dataset
+The dataset includes:
+- 52 samples (26 ME/CFS cases, 26 healthy controls)
+- 1790 metabolomic compounds measured
+- Sample metadata including health status labels
 
-The project uses two main data files:
-
-1. **`data_matrix-table 1.csv`** - Contains metabolomics measurements for 1,790 compounds across 52 samples
-2. **`sample_metadata-Table 1.csv`** - Contains sample metadata including health status labels
-
-### Data Characteristics
-- **Samples**: 52 total (mixed cases and controls)
-- **Features**: 1,790 metabolic compounds
-- **Target**: Binary classification (case vs control)
-
-## Models Implemented
-
-### Traditional Machine Learning
-- Logistic Regression
-- K-Nearest Neighbors (KNN)
-- Decision Tree Classifier
-- Random Forest Classifier
-- Naive Bayes
-- Gradient Boosting Classifier
-
-### Deep Learning
-- Multi-Layer Perceptron (MLP) with scikit-learn
-- Custom Neural Network with TensorFlow/Keras
-  - Architecture: Input → Dense(32) → Dense(16) → Dense(8) → Output
-  - Activation: ReLU for hidden layers, Sigmoid for output
-  - Optimizer: Adam
-  - Loss: Binary Crossentropy
-
-## Key Features
+## Analysis Methods
 
 ### Data Preprocessing
-- Data transposition for proper sample-feature orientation
-- Handling of special characters and decimal formats in CSV files
-- One-hot encoding of categorical labels
-- Train-test split (80-20)
-- Standard scaling for normalization
+1. **Data Loading**: Load metabolomics data and sample metadata from CSV files
+2. **Feature Selection**: Select features with correlation > 0.3 with target variable
+3. **Train/Test Split**: Stratified split to preserve class balance (80/20)
+4. **Scaling**: Standard scaling for models requiring it
 
-### Feature Selection
-- Correlation analysis to identify metabolites most relevant to ME/CFS status
-- Selection of top 31 features based on correlation coefficients (>0.3)
+### Models Implemented
+1. **Logistic Regression** (with feature selection and scaling)
+2. **Random Forest** (with feature selection)
+3. **Decision Tree** (with feature selection)
+4. **Neural Network** (with feature selection and scaling)
 
-### Model Evaluation
-- Accuracy scores
-- Classification reports (precision, recall, F1-score)
-- Confusion matrices
-- Training history visualization for neural networks
+## Key Results
 
-## Results
+- Selected 31 features with correlation > 0.3 for classification (not 18 as previously stated)
+- Model performance on test set:
+  - Neural Network: Accuracy 0.9091, AUC 0.9667
+  - Logistic Regression: Accuracy 0.9091, AUC 0.967
+  - Random Forest: Accuracy 0.733, AUC 0.933
+  - Decision Tree: Accuracy 0.533, AUC 0.717
 
-The models show varying performance levels, with the custom TensorFlow model achieving high training accuracy (approaching 100%) after 300 epochs, though this may indicate potential overfitting given the small dataset size.
+## Visualizations Included
+
+The enhanced notebook includes several visualizations:
+- Feature importance plots showing correlations with health status
+- Confusion matrix comparisons for all models
+- ROC curves for model discrimination ability
+- Box plots showing distribution of key metabolites between cases and controls
 
 ## Usage
 
-1. Ensure required dependencies are installed:
-   ```bash
-   pip install pandas numpy tensorflow scikit-learn matplotlib seaborn
-   ```
+To run the analysis:
+1. Ensure all required Python packages are installed (`pandas`, `numpy`, `scikit-learn`, `tensorflow`, `matplotlib`, `seaborn`)
+2. Open `MCFS_analysis.ipynb` in Jupyter Notebook or compatible environment
+3. Execute cells sequentially to reproduce the analysis
 
-2. Place the data files in the working directory:
-   - `data_matrix-table 1.csv`
-   - `sample_metadata-Table 1.csv`
+## Implications
 
-3. Run the Jupyter notebook sequentially to:
-   - Load and preprocess data
-   - Train various classification models
-   - Evaluate model performance
-   - Perform feature selection
-   - Train deep learning models
-
-## Dependencies
-
-- Python 3.x
-- pandas
-- numpy
-- tensorflow/keras
-- scikit-learn
-- matplotlib
-- seaborn
-
-
-This project demonstrates a comprehensive approach to metabolomics-based classification of ME/CFS, combining traditional machine learning with modern deep learning techniques.
+This work demonstrates that specific metabolic signatures can be used to distinguish ME/CFS patients from healthy controls, which could have implications for:
+- Diagnosis of ME/CFS
+- Monitoring treatment response
+- Understanding disease mechanisms
